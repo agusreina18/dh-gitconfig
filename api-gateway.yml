@@ -1,0 +1,20 @@
+server:
+  port: 8765
+
+spring:
+    cloud:
+          gateway:
+            routes:
+              - id: movieRoute
+                uri: lb://movie-service
+                predicates:
+                  - Path=/movies/**
+              - id: catalogRoute
+                uri: lb://catalog-service
+                predicates:
+                  - Path=/catalog/**
+              - id: get
+                uri: http://httpbin.org:80
+                predicates:
+                  - Method=GET
+                  - Path=/get
